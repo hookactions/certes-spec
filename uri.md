@@ -36,8 +36,59 @@ These are the only 3 valid HTTP endpoints. Each of these have sub-endpoints not 
 
 _TODO_
 
-### Schema
+### Subscribing to events
 
-### Event broker
+When subscribing to events, the URIs are simplified to make the code shorter to read and write. For example when you want to use the `community.certes.dev/github/1/push` event, you will have already entered `events://community.certes.dev` in the Management UI. Transparent to the developer subscribing to the events, the URI will be transformed as such in the Master API:
 
-### Master API
+```
+community.certes.dev/github/1/push => events://community.certes.dev:9600/api/schema/github/1/push
+```
+
+The short form `community.certes.dev/github/1/push` will be deconstructed into the following pseudo-code struct:
+
+```
+EventURI {
+  domain = "community.certes.dev"
+  namespace = "github"
+  version = "1"
+  event_name = "push"
+}
+```
+
+A domain is sort of a namespace of itself, however in the case of `community.certes.dev` we will have many actual namespaces to separate the different third-party events. A third party may also have more than one namespace if it chooses to. If GitHub were to implement this, the URI may look like `events.github.com/repo/1/push` with the struct being:
+
+```
+EventURI {
+  domain = "events.github.com"
+  namespace = "repo"
+  version = "1"
+  event_name = "push"
+}
+```
+
+Namespaces may also be nested up to an arbitrary number (let's say 128 right now), like so: `community.certes.dev/github/repo/1/push`
+
+```
+EventURI {
+  domain = "community.certes.dev"
+  namespace = "github/repo"
+  version = "1"
+  event_name = "push"
+}
+```
+
+When thinking about parsing the path portion of the URI, it might be easier to think about if you were parsing it backwards. 
+Example without any validation:
+
+```python
+uri = "community.certes.dev/github/repo/1/push"
+parts = uri.split("/")
+event_name = parts[-1]
+version = parts[-2]
+namespace = parts[1:-2].join("/")
+domain = parts[0]
+```
+
+### Sending/producing events
+
+### API
