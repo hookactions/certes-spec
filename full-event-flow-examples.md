@@ -73,3 +73,33 @@ For this example, I am a software developer at Meetly who wants to subscribe to 
   - For active subscriptions that are found, the event is queued
   - The Event Consumer receives the event and sends it to the subscriber destination (e.g. `events://events.meetly.com`)
   - The Event Consumer handles HMAC signing
+
+  ```go
+  package main
+
+  import (
+    certes "github.com/hookactions/certes-sdk/go"
+    pbv1 "./pb/v1"  // locally generated protobuf code
+    pbv2 "./pb/v2"  // locally generated protobuf code
+  )
+
+  func init() {
+    certes.Init("events://events.github.com") // GitHub's event gateway, local or hosted by 3rd party
+  }
+
+  func main() {
+    meetlyGhId := "org_123"
+
+    // Something in our code triggers a "push" event for Meetly
+    certes.SendOutgoingEvent(meetlyGhId, &pbv1.PushEvent{
+      Ref: "refs/tags/simple-tag",
+      Before: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",
+      // ... data here related to "push"
+    })
+    certes.SendOutgoingEvent(meetlyGhId, &pbv2.PushEvent{
+      Ref: "refs/tags/simple-tag",
+      BeforeCommitSha: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",  // versioning example of field name changing
+      // ... data here related to "push"
+    })
+  }
+  ```
