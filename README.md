@@ -2,7 +2,7 @@
 
 ## Overview
 
-Certes is a standard for asynchronous events, traditionally known as "[webhooks](https://webhooks.dev/docs/basics/)". 
+Certes is a standard for asynchronous web events, traditionally known as "[webhooks](https://webhooks.dev/docs/basics/)". 
 
 ## Goals
 
