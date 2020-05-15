@@ -19,7 +19,7 @@ Certes is a standard for asynchronous web events, traditionally known as "[webho
 
 ## Non-goals
 
-1. Introduce a new internet protocol (build on existing protocols such as [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol), [GRPC](https://grpc.io/), [DNS](https://www.cloudflare.com/learning/dns/what-is-dns/), etc.)
+1. Introduce a new internet protocol (we should build on existing protocols such as [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol), [GRPC](https://grpc.io/), [DNS](https://www.cloudflare.com/learning/dns/what-is-dns/), etc.)
 1. Solve 100% of asynchronous event problems (i.e. solving the top 20% of pain points/issues may actually solve all the problems for 80% of people)
 1. Re-invent the wheel (i.e. use existing open source tools when possible as long as they add minimal latency)
 

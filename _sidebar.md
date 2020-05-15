@@ -1,7 +1,11 @@
 * [Home](/)
-
-* Schema
-  * [General Event Schema](schema.md)
-  * [Who defines the schema?](schema-definers.md)
-
+* [General Event Schema](schema.md)
+* [Who defines the schema?](schema-definers.md)
 * [URIs](uri.md)
+* [High-level architechture](todo.md)
+* [Event Gateway](todo.md)
+* [Event Broker](todo.md)
+* [Message Queue](todo.md)
+* [Schema Registry](todo.md)
+* [Master API](todo.md)
+* [Event Consumer](todo.md)

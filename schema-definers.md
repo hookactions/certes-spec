@@ -18,4 +18,4 @@ Again, this needs to be flushed out more before implementation in Certes v2.
 
 ## Companies not using Certes
 
-Every company with webhooks will not adopt Certes overnight to produce events. This does not mean companies shouldn't have to wait for them to do this. There will be a community repository where anyone can add schemas for third-party events. In many of the examples in this specification you will see `community.certes.dev` which is where these schemas will live.
+Every company with webhooks will not adopt Certes overnight to produce events. This does not mean companies should have to wait for them to do this. There will be a community repository where anyone can add schemas for third-party events. In many of the examples in this specification you will see `community.certes.dev` which is where these schemas will live.
