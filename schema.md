@@ -67,7 +67,7 @@ New versions can be uploaded via the [Management UI](#todo) or [API](#todo). The
 
 ## Example
 
-**NOTE:** this is not an active schema definition, is just shows what it _could_ look like.
+!> This is not an active schema definition, is just shows what it _could_ look like.
 
 ```protobuf
 // from: https://developer.calendly.com/docs/sample-webhook-data

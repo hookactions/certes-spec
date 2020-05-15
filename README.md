@@ -27,7 +27,7 @@ Certes is a standard for asynchronous web events, traditionally known as "[webho
 
 Meetly (made up company) wants to receive events from GitHub. In this example, GitHub does not natively support Certes so the community has created and uploaded the event schema to `community.certes.dev` for anyone to use.
 
-**NOTE:** this does not compile or work, it is just an example of what Certes _could_ be.
+!> This does not compile or work, it is just an example of what Certes _could_ be.
 
 ```go
 package main
@@ -105,7 +105,7 @@ app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 
 GitHub wants to send events to Meetly who has subscribed to some events.
 
-**NOTE:** this does not compile or work, it is just an example of what Certes _could_ be.
+!> This does not compile or work, it is just an example of what Certes _could_ be.
 
 ```go
 package main
