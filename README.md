@@ -4,6 +4,8 @@
 
 Certes is a standard for asynchronous web events, traditionally known as "[webhooks](https://webhooks.dev/docs/basics/)". 
 
+![certes components](_media/certes_components.png)
+
 ## Goals
 
 1. Standardize asynchronous event handling
