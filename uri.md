@@ -98,11 +98,17 @@ From the producer point of view these fields are transparent and not necessary t
 ```go
 package main
 
+import (
+  certes "github.com/hookactions/certes-sdk/go"
+  pbv1 "./pb/v1"
+)
+
 func init() {
   certes.Init("events://events.mydomain.com")
 }
 
 func main() {
+  // send a: events.mydomain.com/_/1/my_event
   certes.SendOutgoingEvent("some_internal_id", &pbv1.MyEvent{
     Attr: "value",
     AnotherAttr: "another value",
@@ -110,6 +116,6 @@ func main() {
 }
 ```
 
-The only usage of a URI when producing events is for initializing the `certes` sdk.
+The only usage of a URI when producing events is for initializing the `certes` sdk; this would be considered a [General (HTTP)](#general-http) or [General (GRPC)](#general-grpc) context.
 
 ### API
