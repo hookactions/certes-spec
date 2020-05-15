@@ -91,4 +91,25 @@ domain = parts[0]
 
 ### Sending/producing events
 
+When defining the protobuf schema for an event we could create a [custom option](https://developers.google.com/protocol-buffers/docs/proto#customoptions) (or options) to embed the `event_name`, `version`, `namespace`, and `domain` dynamically when the schema is uploaded to the Master API and then sent to the schema registry. The producer would upload the protobuf without these options and then the API would return a new protobuf schema with these options set. This file would then be used to generate any necessary code for the producer and subscriber.
+
+From the producer point of view these fields are transparent and not necessary to be specified when sending events like so:
+
+```go
+package main
+
+func init() {
+  certes.Init("events://events.mydomain.com")
+}
+
+func main() {
+  certes.SendOutgoingEvent("some_internal_id", &pbv1.MyEvent{
+    Attr: "value",
+    AnotherAttr: "another value",
+  })
+}
+```
+
+The only usage of a URI when producing events is for initializing the `certes` sdk.
+
 ### API
