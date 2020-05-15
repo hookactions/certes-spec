@@ -98,3 +98,39 @@ const port = 8080;
 app.post("/", certes.expressHandler());
 app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 ```
+
+## Small producer example
+
+GitHub wants to send events to Meetly who has subscribed to some events.
+
+**NOTE:** this does not compile or work, it is just an example of what Certes _could_ be.
+
+```go
+package main
+
+import (
+  certes "github.com/hookactions/certes-sdk/go"
+  pbv1 "./pb/v1"  // locally generated protobuf code
+  pbv2 "./pb/v2"  // locally generated protobuf code
+)
+
+func init() {
+  certes.Init("events://events.github.com") // GitHub's event gateway, local or hosted by 3rd party
+}
+
+func main() {
+  meetlyGhId := "org_123"
+
+  // Something in our code triggers a "push" event for Meetly
+  certes.SendOutgoingEvent(meetlyGhId, &pbv1.PushEvent{
+    Ref: "refs/tags/simple-tag",
+    Before: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",
+    // ... data here related to "push"
+  })
+  certes.SendOutgoingEvent(meetlyGhId, &pbv2.PushEvent{
+    Ref: "refs/tags/simple-tag",
+    BeforeCommitSha: "6113728f27ae82c7b1a177c8d03f9e96e0adf246",  // versioning example of field name changing
+    // ... data here related to "push"
+  })
+}
+```
