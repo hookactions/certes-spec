@@ -23,7 +23,7 @@ Certes is a standard for asynchronous web events, traditionally known as "[webho
 
 ## Small client example
 
-Meetly (made up company) wants to receive events from GitHub. In this example, GitHub does not natively support Certes so the community has created and uploaded the event schema to "community.certes.dev" for anyone to use.
+Meetly (made up company) wants to receive events from GitHub. In this example, GitHub does not natively support Certes so the community has created and uploaded the event schema to `community.certes.dev` for anyone to use.
 
 **NOTE:** this does not compile or work, it is just an example of what Certes _could_ be.
 
@@ -69,4 +69,32 @@ func main() {
   http.HandleFunc("/", certes.HttpHandler())
   log.Fatal(http.ListenAndServe(":8080", nil))
 }
+```
+
+```javascript
+import certes from "@certes/sdk";
+import {github as gh} from "@certes/contrib";
+import express from "express";
+
+certes.init("events://events.meetly.com");
+certes.ensureSubscriptions([
+  certes.event("community.certes.dev/github/1/push"),
+  certes.event("community.certes.dev/github/1/issues", {
+    repo: "meetly/app",
+  }),
+  certes.event("community.certes.dev/github/1/membership", {
+    org: "meetly",
+  }),
+]);
+
+certes.on("community.certes.dev/github/1/push", (raw) => {
+  const event = raw as gh.PushEvent;  // in typescript, omit for regular JS
+  console.log(`Got GitHub push event: ${event}`);
+});
+
+const app = express();
+const port = 8080;
+
+app.post("/", certes.expressHandler());
+app.listen(port, () => console.log(`Listening at http://localhost:${port}`));
 ```
