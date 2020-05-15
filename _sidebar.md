@@ -10,5 +10,6 @@
 * [Schema Registry](todo.md)
 * [Master API](todo.md)
 * [Event Consumer](todo.md)
+* [Tracing & Monitoring](todo.md)
 * [Full event flow examples](full-event-flow-examples.md)
 * [Who](who.md)
