@@ -6,7 +6,7 @@ There are two scenarios to determine who should define the schema. For the first
 
 When creating custom integrations, this is the most common use case: I want to receive events from a third party, the third party has defined what those events look like, I need to write code to handle that data format. Some examples of this are: GitHub, Calendly, Copper CRM, and Stripe.
 
-For this use case, the producer of events will define the schema and the subscriber must write code to accomodate these foreign data structures. In order to set up a subscription, the subscriber will call the local "[Master API](#todo)" such as `certes.EnsureSubscriptions(...)`. The Master API will then ensure authentication is set up for the specified service and create the subscriptions.
+For this use case, the producer of events will define the schema and the subscriber must write code to accommodate these foreign data structures. In order to set up a subscription, the subscriber will call the local "[Master API](/master-api)" such as `certes.EnsureSubscriptions(...)`. The Master API will then ensure authentication is set up for the specified service and create the subscriptions.
 
 ## Subscriber defined schema
 

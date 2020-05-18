@@ -3,7 +3,7 @@
 * [Who defines the schema?](schema-definers.md)
 * [Schema Namespaces](schema-namespaces.md)
 * [URIs](uri.md)
-* [High-level architechture](todo.md)
+* [High-level architecture](architecture.md)
 * [Event Gateway](todo.md)
 * [Event Broker](todo.md)
 * [Message Queue](todo.md)

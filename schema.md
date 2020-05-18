@@ -11,11 +11,11 @@ They are statically typed, which means extra type safety when also using a stati
 
 ### Why not JSON?
 
-A case could be made that using the Open API specification for defining the event schema would be adventageous because of the low learning curve to use JSON. My current opinion is that the benefits of a using a statically typed schema definition language such as protobuf outweigh the learning curve. A goal of Certes is to be safe and scalable, I don't believe JSON will ensure that. In fact, AWS Event Bridge uses JSON to define their schemas but they are extremely difficult to read and understand.
+A case could be made that using the Open API specification for defining the event schema would be advantageous because of the low learning curve to use JSON. My current opinion is that the benefits of a using a statically typed schema definition language such as protobuf outweigh the learning curve. A goal of Certes is to be safe and scalable, I don't believe JSON will ensure that. In fact, AWS Event Bridge uses JSON to define their schemas but they are extremely difficult to read and understand.
 
 ### Why not _X_?
 
-If you would like to suggest a different schema definition language please create an issue in our GitHub respository. Keep the following in mind:
+If you would like to suggest a different schema definition language please create an issue in our GitHub repository. Keep the following in mind:
 
 - Readability is key!
 - Let's not reinvent the wheel
@@ -36,13 +36,13 @@ Backwards compatible changes mean that any changes to the schema will not break 
 
 ### Backwards incompatible
 
-Backwards incompatible changes mean that a change to the schema will break downstrewam consumers of the schema. Examples are:
+Backwards incompatible changes mean that a change to the schema will break downstream consumers of the schema. Examples are:
 
 - Removing a field
 - Removing a message type
 - Changing a field's type
 - Adding a new enum member*
-- Remving an enum member
+- Removing an enum member
 
 *Adding a new enum member could be considered a backward compatible change. From the schema point of view, it is, but from a code point of view it may not be. Consider the following Go code:
 

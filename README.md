@@ -12,7 +12,7 @@ Certes is a standard for asynchronous web events, traditionally known as "[webho
 1. Standardize an interface for creating and managing event subscriptions
 1. Standardize the monitoring and tracing of asynchronous events
 1. Standardize the format of asynchronous event data
-1. Minimal latency increase (up to 150ms from event received to processed)
+1. Minimal latency increase (up to 150 ms from event received to processed)
 1. Maintain an open source community for changes, feedback, and guidance
 1. Deploy anywhere with many options (e.g. single binary, docker, k8s, etc.)
 1. Programming language agnostic client usage
