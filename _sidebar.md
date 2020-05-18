@@ -5,7 +5,7 @@
 * [URIs](uri.md)
 * [High-level architecture](architecture.md)
 * [Event Gateway](event-gateway.md)
-* [Event Broker](todo.md)
+* [Event Broker](event-broker.md)
 * [Message Queue](todo.md)
 * [Schema Registry](todo.md)
 * [Master API](todo.md)
