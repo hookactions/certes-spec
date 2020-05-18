@@ -7,7 +7,7 @@
 * [Event Gateway](event-gateway.md)
 * [Event Broker](event-broker.md)
 * [Message Queue](message-queue.md)
-* [Schema Registry](todo.md)
+* [Schema Registry](schema-registry.md)
 * [Master API](todo.md)
 * [Event Consumer](todo.md)
 * [Tracing & Monitoring](todo.md)

@@ -51,3 +51,5 @@ RabbitMQ
 AMQP
 Cloudwatch
 PubSub
+DNS
+VersionUpdate
