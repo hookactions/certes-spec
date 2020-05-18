@@ -63,7 +63,7 @@ If we're not careful, the default case handler could be to panic for unexpected 
 
 When ensuring subscriptions are active from code, the URI will contain a version number. In terms of SemVer, the following URI would be approximately equal to `^1.0.0` in SemVer: `community.certes.dev/github/1/push`. This means that any version updates such as `1.1.0` or `1.2.0` would still be sent to this subscriber because they are backwards compatible changes. When version `2.0.0` is released, those events would not be sent to the consumer unless they update their code to subscribe to `community.certes.dev/github/2/push`.
 
-New versions can be uploaded via the [Management UI](#todo) or [API](#todo). They will automatically versioned and checked for backwards compatibility.
+New versions can be uploaded via the [Management UI](/management-ui) or [API](/master-api). They will automatically versioned and checked for backwards compatibility.
 
 ## Example
 

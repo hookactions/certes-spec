@@ -18,4 +18,4 @@ events.meetly.com/org/user/1/my_event => "org/user"
 events.meetly.com/foo/bar/baz/1/my_event => "foo/bar/baz"
 ```
 
-Notice that the namespaces are just a single string, NOT an array or list. This should simplify storage of namespaces and events under them. See the "[Schema Registry](#todo)" component to read more about this decision.
+Notice that the namespaces are just a single string, NOT an array or list. This should simplify storage of namespaces and events under them. See the "[Schema Registry](/schema-registry)" component to read more about this decision.

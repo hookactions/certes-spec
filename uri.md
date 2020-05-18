@@ -28,7 +28,7 @@ These are the only 3 valid HTTP endpoints. Each of these have sub-endpoints not 
 
 1. Initialization of sdk: `certes.Init("events://events.meetly.com")`
   - This specifies your Certes gateway. You can host this yourself or have it managed by a third-party. such as [HookActions](https://hookactions.com).
-1. When adding new producers in the "[Management UI](#todo)": `events://community.certes.dev`
+1. When adding new producers in the "[Management UI](/management-ui)": `events://community.certes.dev`
   - The Management UI will use this URI to discover the available events and their schema.
   - The Management UI will use this URI to determine how to authenticate with the given third-party.
 

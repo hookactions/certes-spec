@@ -7,7 +7,7 @@ Throughout this spec I've shown some different examples in their own specific co
 For this example, I am a software developer at Meetly who wants to subscribe to events that GitHub is sending. At this time GitHub does not officially support Certes so I will use the community developed schemas.
 
 1. Go to `mgmt.meetly.com`
-  - This can be a locally hosted [Management UI](#todo) by Meetly or a third-party Management UI.
+  - This can be a locally hosted [Management UI](/management-ui) by Meetly or a third-party Management UI.
 1. Enter `events://community.certes.dev/github`
   - The Management UI will call the Master API to retrieve events for this URI & Namespace.
   - The namespace "github" is optional, but can be used when there are many namespaces available.
