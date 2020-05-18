@@ -25,7 +25,197 @@ service SchemaRegistry {
 
 ## Schema storage
 
+There should be a user configurable limit to either the maximum number of schemas to cache or a limit of the total size. The interface to interacting with the storage might look like this:
+
+```go
+// File represents a file in the filesystem.
+type File interface {
+	io.Closer
+	io.Reader
+	io.ReaderAt
+	io.Seeker
+	io.Writer
+	io.WriterAt
+
+	Name() string
+	Readdir(count int) ([]os.FileInfo, error)
+	Readdirnames(n int) ([]string, error)
+	Stat() (os.FileInfo, error)
+	Sync() error
+	Truncate(size int64) error
+	WriteString(s string) (ret int, err error)
+}
+
+// Fs is the filesystem interface.
+//
+// Any simulated or real filesystem should implement this interface.
+type Fs interface {
+	// Create creates a file in the filesystem, returning the file and an
+	// error, if any happens.
+	Create(name string) (File, error)
+
+	// Mkdir creates a directory in the filesystem, return an error if any
+	// happens.
+	Mkdir(name string, perm os.FileMode) error
+
+	// MkdirAll creates a directory path and all parents that does not exist
+	// yet.
+	MkdirAll(path string, perm os.FileMode) error
+
+	// Open opens a file, returning it or an error, if any happens.
+	Open(name string) (File, error)
+
+	// OpenFile opens a file using the given flags and the given mode.
+	OpenFile(name string, flag int, perm os.FileMode) (File, error)
+
+	// Remove removes a file identified by name, returning an error, if any
+	// happens.
+	Remove(name string) error
+
+	// RemoveAll removes a directory path and any children it contains. It
+	// does not fail if the path does not exist (return nil).
+	RemoveAll(path string) error
+
+	// Rename renames a file.
+	Rename(oldname, newname string) error
+
+	// Stat returns a FileInfo describing the named file, or an error, if any
+	// happens.
+	Stat(name string) (os.FileInfo, error)
+
+	// The name of this FileSystem
+	Name() string
+
+	//Chmod changes the mode of the named file to mode.
+	Chmod(name string, mode os.FileMode) error
+
+	//Chtimes changes the access and modification times of the named file
+	Chtimes(name string, atime time.Time, mtime time.Time) error
+}
+```
+
+There could be various backends implemented for this, including:
+
+- [bolt](https://github.com/etcd-io/bbolt)
+- In-memory
+- S3
+- File-system
+
+In fact, we could use the [afero](https://github.com/spf13/afero) golang library for this, even though we don't need _all_ of the functionality around chmod and such.
+
 ## Dynamic schema validation & usage
+
+This is the hardest part of the whole Certes project I think.
+We will need to use the [`google.protobuf.Any`](https://developers.google.com/protocol-buffers/docs/proto3#any) type. Let's take for example the Event Broker:
+
+```protobuf
+service EventBroker {
+  rpc HandleIncomingEvent(IncomingEvent) returns (...) {};
+}
+
+message IncomingEvent {
+  string schema = 1;  // community.certes.dev/github/repo/1/push
+  repeated Header headers = 2;  // {"X-Foo": ["bar", "baz"]}
+  google.protobuf.Any body = 3;
+}
+
+message Header {
+  string name = 1;
+  repeated string values = 2;
+}
+```
+
+The Schema Registry might look like this:
+
+```protobuf
+service SchemaRegistry {
+  rpc ValidateEventForSchema(ValidateEventSchemaRequest) returns (...) {};
+}
+
+message ValidateEventSchemaRequest {
+  string schema = 1;
+  google.protobuf.Any body = 3;
+}
+```
+
+In the protobuf examples of `Any` you are able to unpack the `Any` field to a known type:
+
+```protobuf
+import "google/protobuf/any.proto";
+
+message ErrorStatus {
+  string message = 1;
+  repeated google.protobuf.Any details = 2;
+}
+```
+
+```go
+package anything_test
+
+//go:generate protoc --go_out=. anything.proto
+
+import (
+	"reflect"
+	"testing"
+
+	proto "github.com/golang/protobuf/proto"
+	"github.com/golang/protobuf/ptypes"
+	any "github.com/golang/protobuf/ptypes/any"
+	"github.com/golang/protobuf/ptypes/timestamp"
+	"github.com/pokstad/anything"
+)
+
+func TestAnything(t *testing.T) {
+	t1 := &timestamp.Timestamp{
+		Seconds: 5, // easy to verify
+		Nanos:   6, // easy to verify
+	}
+
+	serialized, err := proto.Marshal(t1)
+	if err != nil {
+		t.Fatal("could not serialize timestamp")
+	}
+
+	// Blue was a great album by 3EB, before Cadgogan got kicked out
+	// and Jenkins went full primadonna
+	a := anything.AnythingForYou{
+		Anything: &any.Any{
+			TypeUrl: "example.com/yaddayaddayadda/" + proto.MessageName(t1),
+			Value:   serialized,
+		},
+	}
+
+	// marshal to simulate going on the wire:
+	serializedA, err := proto.Marshal(&a)
+	if err != nil {
+		t.Fatal("could not serialize anything")
+	}
+
+	// unmarshal to simulate coming off the wire
+	var a2 anything.AnythingForYou
+	if err := proto.Unmarshal(serializedA, &a2); err != nil {
+		t.Fatal("could not deserialize anything")
+	}
+
+	// unmarshal the timestamp
+	var t2 timestamp.Timestamp
+	if err := ptypes.UnmarshalAny(a2.Anything, &t2); err != nil {
+		t.Fatalf("Could not unmarshal timestamp from anything field: %s", err)
+	}
+
+	// Verify the values are as expected
+	if !reflect.DeepEqual(t1, &t2) {
+		t.Fatalf("Values don't match up:\n %+v \n %+v", t1, t2)
+	}
+}
+```
+
+So theoretically we could `Unmarshal` to an `interface{}` but that doesn't validate that the schema is valid. This is why I'm thinking this component may need to be written in a dynamic language like python. This is the [example](https://developers.google.com/protocol-buffers/docs/reference/python-generated#any) code for `Unpack`ing an `Any` message. It seems like we may still need to pass in the correct protobuf descriptor, but with Python, we could just `exec(...)` the dynamically generated code for any new schemas. It's obviously much less safe, but I'm not sure how else to handle this with Go.
+
+```python
+any_message.Pack(message)
+any_message.Unpack(message)
+```
 
 ## Generic Events
 
