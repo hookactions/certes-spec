@@ -4,7 +4,7 @@
 * [Schema Namespaces](schema-namespaces.md)
 * [URIs](uri.md)
 * [High-level architecture](architecture.md)
-* [Event Gateway](todo.md)
+* [Event Gateway](event-gateway.md)
 * [Event Broker](todo.md)
 * [Message Queue](todo.md)
 * [Schema Registry](todo.md)

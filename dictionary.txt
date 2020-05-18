@@ -22,7 +22,6 @@ URI
 URIs
 VPC
 api
-architechture
 certes
 config
 enum
@@ -42,3 +41,4 @@ struct
 v2
 webhook
 webhooks
+deployable
