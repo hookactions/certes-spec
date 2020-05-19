@@ -217,6 +217,19 @@ any_message.Pack(message)
 any_message.Unpack(message)
 ```
 
+The reason this _could_ work with Python is that we could dynamically generate the Python code using `protoc` then call `exec(...)` on the result to have dynamic access to the message types.
+
+```python
+protoc_result = ...
+data = {}
+exec(protc_result, globals(), data)
+
+message_type = data["GitHubPushMessage"]
+any_message.Unpack(message_type)
+```
+
+There are many security implications around this which may leave this component vulnerable.
+
 ## Generic Events
 
 It is sometimes useful for two or more Certes deployments to talk to each other, for example when a new schema is available or to check if the deployment is available with a simple "ping".

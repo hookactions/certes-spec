@@ -121,6 +121,10 @@ In order to make this work with our HTTP proxy mentioned above, we have a few op
 
 I think running the HTTP to GRPC proxy next to the HTTP proxy will work for now and quite frankly may not even require the same proxy configuration as the regular HTTP proxy for the Master API.
 
+## Authentication
+
+Authentication is handled by the exposed services. See [Event Broker](/event-broker#authentication) and [Master API](/master-api#authentication) for specific details.
+
 
 ## Other Implementation Options
 
