@@ -2,6 +2,26 @@
 
 [summary](_media/master-api-summary.md ':include')
 
+There is a possibility of a single port `9610`, see [this example](https://github.com/philips/grpc-gateway-example/blob/master/cmd/serve.go#L51).
+
+```go
+// ... snip ...
+
+func grpcHandlerFunc(grpcServer *grpc.Server, otherHandler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// This is a partial recreation of gRPC's internal checks https://github.com/grpc/grpc-go/pull/514/files#diff-95e9a25b738459a2d3030e1e6fa2a718R61
+		if r.ProtoMajor == 2 && strings.Contains(r.Header.Get("Content-Type"), "application/grpc") {
+			grpcServer.ServeHTTP(w, r)
+		} else {
+			otherHandler.ServeHTTP(w, r)
+		}
+	})
+}
+
+// ... snip ...
+```
+
+
 ## Available operations
 
 For most of these operations they will just interact with the state database, however the schema related operations will interact with the Schema Registry.
