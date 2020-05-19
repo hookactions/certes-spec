@@ -8,7 +8,7 @@
 * [Event Broker](event-broker.md)
 * [Message Queue](message-queue.md)
 * [Schema Registry](schema-registry.md)
-* [Master API](todo.md)
+* [Master API](master-api.md)
 * [Event Consumer](todo.md)
 * [Tracing & Monitoring](todo.md)
 * [Management UI](todo.md)

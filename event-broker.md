@@ -40,7 +40,7 @@ Upon storing the event in the Master API, a unique ID will be returned which sho
 
 ## Authentication
 
-The traditional way of hanlding authentication with webhooks is using HMAC signatures of the body of the request. This component operates using GRPC which generally has two ways of handling authentication: SSL/TLS and Token-based authentication with Google. There are also libraries and examples of sending api keys via the message metadata.
+The traditional way of handling authentication with webhooks is using HMAC signatures of the body of the request. This component operates using GRPC which generally has two ways of handling authentication: SSL/TLS and Token-based authentication with Google. There are also libraries and examples of sending api keys via the message metadata.
 
 There is a library called [`go-grpc-middleware`](https://github.com/grpc-ecosystem/go-grpc-middleware) which has many examples and packages of writing GRPC interceptors (or middleware).
 
