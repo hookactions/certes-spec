@@ -66,6 +66,8 @@ Authorization: JWT xxx.xxx.xxx
 
 The Master API will be responsible for creating new JWTs but other components may need to validate these tokens. The best approach is a public/private key pair so the components only needing to validate the token can do so with the public key. At this time `RS256` seems like the best signing algorithm; it is fast and secure.
 
+This token would be generated when a user signs into the API. For now, a simple username and password combination should suffice.
+
 ### GRPC
 
 As with the other components in Certes, the default handling of internal GRPC authentication is with SSL/TLS. If the GRPC methods are called from the Event Gateway then a JWT will be required in the GRPC request metadata. This JWT will be validated in the same manner as previously discussed in the HTTP section, the only difference is how it is generated. For GRPC use, a JWT may need to be long-lived and will be treated as an API key which can be provisioned in the Management UI.
@@ -96,3 +98,7 @@ The default database will be Postgres because I've worked with it the most in th
 !> _TODO_: define necessary models
 
 There shouldn't be a need for a cache like Redis as long as we define proper indices.
+
+## Management UI Notes
+
+This API should provide the low-level workings of Certes, if the Management UI needs a cleaner interface to work with the data returned from this API, it should define its own API and build on top of this.
