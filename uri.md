@@ -34,7 +34,7 @@ These are the only 3 valid HTTP endpoints. Each of these have sub-endpoints not 
 
 ## General (GRPC)
 
-!> _TODO_
+_See the [Event Gateway](/event-gateway#grpc)_
 
 ## Subscribing to events
 
@@ -122,4 +122,4 @@ The only usage of a URI when producing events is for initializing the `certes` s
 
 URIs for the Master API are straightforward, they are WYSIWYG and similar to the General cases. All API endpoints are under the `/api` endpoint on the HTTP port (normally `9600`) for the Event Gateway. The Master API can also be accessed with GRPC, normally on port `9601`.
 
-!> It still needs to be determined how the Event Gateway will handle GRPC.
+_See the [Event Gateway GRPC section](/event-gateway#grpc)_
