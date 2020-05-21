@@ -34,7 +34,63 @@ Another option would be to have another component that sits between the queue an
 
 ## NATS
 
-!> TODO
+[NATS](https://nats.io/) is a newer messaging system supported by the [Cloud Native Computing Foundation](https://cncf.io/projects). The throughput is quite large compared to the other systems following this section:
+
+![NATS throughput](_media/nats.png)
+
+It can be used a bi-directional messaging system or a one-way queue. Example usage:
+
+```go
+import nats "github.com/nats-io/nats.go"
+
+// Connect to a server
+nc, _ := nats.Connect(nats.DefaultURL)
+
+// Simple Publisher
+nc.Publish("foo", []byte("Hello World"))
+
+// Simple Async Subscriber
+nc.Subscribe("foo", func(m *nats.Msg) {
+    fmt.Printf("Received a message: %s\n", string(m.Data))
+})
+
+// Responding to a request message
+nc.Subscribe("request", func(m *nats.Msg) {
+    m.Respond([]byte("answer is 42"))
+})
+
+// Simple Sync Subscriber
+sub, err := nc.SubscribeSync("foo")
+m, err := sub.NextMsg(timeout)
+
+// Channel Subscriber
+ch := make(chan *nats.Msg, 64)
+sub, err := nc.ChanSubscribe("foo", ch)
+msg := <- ch
+
+// Unsubscribe
+sub.Unsubscribe()
+
+// Drain
+sub.Drain()
+
+// Requests
+msg, err := nc.Request("help", []byte("help me"), 10*time.Millisecond)
+
+// Replies
+nc.Subscribe("help", func(m *nats.Msg) {
+    nc.Publish(m.Reply, []byte("I can help!"))
+})
+
+// Drain connection (Preferred for responders)
+// Close() not needed if this is called.
+nc.Drain()
+
+// Close connection
+nc.Close()
+```
+
+It's actually quite similar to the interface we defined for consuming events in the [examples](/full-event-flow-examples). It's obviously platform agnostic and supports high-availability using a cluster.
 
 ## RabbitMQ
 
