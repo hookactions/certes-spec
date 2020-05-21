@@ -6,6 +6,10 @@ Certes is a standard for asynchronous web events, traditionally known as "[webho
 
 ![certes components](_media/certes_components.png)
 
+## How to read
+
+This spec should be read in order in regards to a page's sections and each page on the sidebar.
+
 ## Goals
 
 1. Standardize asynchronous event handling
