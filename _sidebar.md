@@ -10,7 +10,7 @@
 * [Message Queue](message-queue.md)
 * [Schema Registry](schema-registry.md)
 * [Master API](master-api.md)
-* [Event Consumer](todo.md)
+* [Event Consumer](event-consumer.md)
 * [Tracing & Monitoring](todo.md)
 * [Management UI](todo.md)
 * [Full event flow examples](full-event-flow-examples.md)

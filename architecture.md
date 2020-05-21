@@ -36,12 +36,7 @@ Now let's give a high level overview of each component. Each of these components
 
 ## Event Consumer
 
-The Event Consumer is a fairly straightforward component, it has the following responsibilities:
-
-1. Handles new events from the Message Queue (either via polling or other subscription)
-1. Verifies the HMAC signature of the event (retrieve HMAC secret from Master API)
-1. Sends the event to the downstream consumer (only via HTTP right now, may include GRPC in the future)
-1. Handles failure and requeues the event via the configured back-off rules
+[summary](_media/event-consumer-summary.md ':include')
 
 ## Back-offs
 
@@ -50,9 +45,4 @@ In the previous Master API section, "back-offs" were briefly mentioned. Events *
 1. The producer of events defines their back-off strategy when the consumer of events is unavailable to receive an event (e.g. Certes gateway is down, maintenance, etc.)
 1. The subscriber of events their back-off strategy when the downstream API or event handler is unavailable (e.g. API server is down, maintenance, etc.)
 
-The producer configuration is independent of the subscriber configuration and vice-versa. These configurations should be created via Master API or Management UI. There are some generic retry strategies included with Certes:
-
-1. Logarithmic back-off configured via: maximum retries (absolute number) or maximum time to try (e.g. 7 days)
-1. Linear back-off configured via: maximum retries (absolute number) or maximum time to try (e.g. 7 days)
-
-These rules are set at a global level and may be configured per event source (e.g. GitHub) or per event type (e.g. GitHub push).
+[summary](_media/backoffs-summary.md ':include')
