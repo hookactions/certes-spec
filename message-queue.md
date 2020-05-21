@@ -32,6 +32,10 @@ service EventConsumer {
 
 Another option would be to have another component that sits between the queue and the Event Consumer to translate the messages from the various queue formats into a GRPC call to the Event Consumer.
 
+## NATS
+
+!> TODO
+
 ## RabbitMQ
 
 [RabbitMQ](https://www.rabbitmq.com/) is quite similar to Kafka in terms of scalability, however, RabbitMQ is quite easier to set up. It also uses a more generic protocol called [AMQP](https://www.amqp.org/). RabbitMQ supports [priority queues](https://www.rabbitmq.com/priority.html) which makes it a great choice for Certes.
