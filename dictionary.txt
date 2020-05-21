@@ -77,3 +77,7 @@ requeue
 performant
 cryptographic
 SHA256
+OpenTracing
+Jaeger
+Datadog
+OpenTelemetry
