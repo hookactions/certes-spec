@@ -12,6 +12,6 @@
 * [Master API](master-api.md)
 * [Event Consumer](event-consumer.md)
 * [Tracing & Monitoring](tracing.md)
-* [Management UI](todo.md)
+* [Management UI](management-ui.md)
 * [Full event flow examples](full-event-flow-examples.md)
 * [Who](who.md)
